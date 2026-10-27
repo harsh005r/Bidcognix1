@@ -72,7 +72,7 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
     try {
       setIsExtractingPdf(true);
       setUploadError(null);
-      const res = await ApiService.uploadTenderPdf(file, tender.id);
+      const res = await ApiService.uploadTenderPdf(file);
       if (res && res.analysis) {
         setExtractedPdfData(res.analysis);
         setPdfExtractSuccess(true);
@@ -154,13 +154,13 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
 
   const isIT = tender.category === 'IT';
   const missingCount = (evaluation?.missing_requirements || []).length;
-  const missingSummary = missingCount > 0 
-    ? `Missing: ${evaluation?.missing_requirements[0]?.required || '1 Document'}` 
+  const missingSummary = missingCount > 0
+    ? `Missing: ${evaluation?.missing_requirements[0]?.required || '1 Document'}`
     : 'All Documents Ready';
 
   return (
     <div className="space-y-6 pb-12">
-      
+
       {/* Top Action Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <button
@@ -182,11 +182,10 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
 
           <button
             onClick={handleToggleBookmark}
-            className={`inline-flex items-center gap-1.5 rounded-xl border px-4 py-2 text-xs font-bold transition-all ${
-              isBookmarked
+            className={`inline-flex items-center gap-1.5 rounded-xl border px-4 py-2 text-xs font-bold transition-all ${isBookmarked
                 ? 'bg-amber-500/15 border-amber-500/30 text-amber-300'
                 : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white'
-            }`}
+              }`}
           >
             <Bookmark className={`h-4 w-4 ${isBookmarked ? 'fill-amber-400' : ''}`} />
             <span>{isBookmarked ? 'Saved in My Tenders' : 'Save to My Tenders'}</span>
@@ -256,7 +255,7 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
 
       {/* 4 Simple Metric Tiles */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        
+
         <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-4 space-y-1 text-center">
           <span className="text-[11px] font-bold text-slate-400 uppercase">Profile Match</span>
           <p className="text-3xl font-black text-brand-400">{evaluation?.match_score || 88}%</p>
@@ -287,7 +286,7 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
 
       {/* Side-by-Side: What You Have vs What You Need */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
+
         {/* Left: Matched Requirements (What your company has) */}
         <div className="rounded-3xl border border-emerald-500/30 bg-slate-900/90 p-6 shadow-xl space-y-4">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -363,7 +362,7 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
 
       {/* Simple Interactive Compliance Checklist */}
       <div className="rounded-3xl border border-slate-800 bg-slate-900/90 p-6 shadow-xl space-y-4">
-        
+
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div>
             <h2 className="text-base font-bold text-white flex items-center gap-2">
@@ -385,11 +384,10 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
               <div
                 key={item.id}
                 onClick={() => toggleChecklistItem(item.id)}
-                className={`rounded-2xl border p-3.5 cursor-pointer transition-all flex items-start gap-3 ${
-                  isChecked
+                className={`rounded-2xl border p-3.5 cursor-pointer transition-all flex items-start gap-3 ${isChecked
                     ? 'border-emerald-500/40 bg-emerald-950/20'
                     : 'border-slate-800 bg-slate-950/70 hover:border-slate-700'
-                }`}
+                  }`}
               >
                 <div className="mt-0.5">
                   {isChecked ? (
@@ -402,9 +400,8 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-white">{item.title}</span>
-                    <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
-                      item.color === 'green' ? 'text-emerald-400 bg-emerald-500/10' : 'text-amber-400 bg-amber-500/10'
-                    }`}>
+                    <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${item.color === 'green' ? 'text-emerald-400 bg-emerald-500/10' : 'text-amber-400 bg-amber-500/10'
+                      }`}>
                       {item.badge}
                     </span>
                   </div>
@@ -442,10 +439,10 @@ export const TenderDetailPage: React.FC<TenderDetailPageProps> = ({
           <label className="cursor-pointer inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-500 hover:to-teal-500 text-white px-4 py-2 text-xs font-bold shadow-lg shadow-brand-600/20 transition-all shrink-0">
             <UploadCloud className="h-4 w-4" />
             <span>{isExtractingPdf ? 'Processing PDF...' : 'Upload Tender PDF'}</span>
-            <input 
-              type="file" 
-              accept=".pdf" 
-              className="hidden" 
+            <input
+              type="file"
+              accept=".pdf"
+              className="hidden"
               onChange={handlePdfUpload}
               disabled={isExtractingPdf}
             />
